@@ -3,7 +3,7 @@
 
 from api.v1.views import app_views
 from json import dumps
-from flask import Response
+from flask import Response, jsonify
 from models import storage
 
 
@@ -15,7 +15,7 @@ def status():
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
-    """Returns the stats of storage entities"""
+    """Returns the count of all class objects"""
     data = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
