@@ -19,7 +19,7 @@ def one_state(state_id):
     obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
-    return jsonify(obj.to_dict()), 
+    return jsonify(obj.to_dict())
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
