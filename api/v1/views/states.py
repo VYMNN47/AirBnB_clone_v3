@@ -31,7 +31,7 @@ def delete_state(state_id):
         abort(404)
     state.delete()
     storage.save()
-    return jsonify({i})
+    return jsonify({})
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -45,7 +45,7 @@ def new_state():
 
     obj = State(**request.get_json())
     obj.save()
-    return make_response(jsonify(obj.to_dict()), 201)
+    return make_response(jsonify(obj_.to_dict()), 201)
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
