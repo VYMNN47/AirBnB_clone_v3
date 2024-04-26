@@ -17,9 +17,9 @@ def state():
 def one_state(state_id):
     """Retrieves a State object"""
     obj = storage.get(State, state_id)
-    if not obj:
+    if obj is None:
         abort(404)
-    return jsonify(obj.to_dict())
+    return jsonify(obj.to_dict()), 
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
@@ -46,7 +46,7 @@ def new_state():
 
     obj = State(**request.get_json())
     storage.save()
-    return jsonify(obj.to_dict()), 201
+    return make_response(jsonify(obj.to_dict()), 201)
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
