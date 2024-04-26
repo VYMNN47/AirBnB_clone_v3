@@ -46,7 +46,7 @@ def new_state():
 
     obj = State(**request.get_json())
     storage.save()
-    return make_response(jsonify(obj.to_dict()), 201)
+    return jsonify(obj.to_dict()), 201
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
