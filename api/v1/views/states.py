@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import abort, jsonify
+from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
 from models.state import State
@@ -30,7 +30,17 @@ def delete_state(state_id):
         abort(404)
     obj.delete()
     storage.save()
-    return make_response(jsonify({}), 200)
+    return jsonify({}), 200
 
 
-
+@app_views.route('/states', methods=['POST'])
+def new_state():
+    new_obj = request.get_json()
+    if not new_obj:
+        abort(400, "Not a JSON")
+    if 'name' not in new_obj:
+        abort(400, "Missing name")
+    obj = State(name=response['name'])
+    storage.new(obj)
+    storage.save()
+    return jsonify(obj.to_dict()), 201
