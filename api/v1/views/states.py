@@ -15,6 +15,7 @@ def state():
 
 @app_views.route('/states/<state_id>', methods=['GET'])
 def one_state(state_id):
+    """Retrieves a State object"""
     obj = storage.get(State, state_id)
     if not obj:
         abort(404)
