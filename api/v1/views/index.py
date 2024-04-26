@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Routes API"""
+"""This module contains routes for API status."""
+
 from api.v1.views import app_views
 from json import dumps
 from flask import Response
