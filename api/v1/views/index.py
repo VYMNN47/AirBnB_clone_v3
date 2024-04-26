@@ -8,6 +8,7 @@ from models import storage
 def status():
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', methods=['GET'])
 def stats():
     data = {
@@ -18,4 +19,5 @@ def stats():
         "states": storage.count("State"),
         "users": storage.count("User")
     }
-    return Response(response=dumps(data, indent=2) + '\n', mimetype='application/json')
+    return Response(response=dumps(data, indent=2)
+                    + '\n', mimetype='application/json')
