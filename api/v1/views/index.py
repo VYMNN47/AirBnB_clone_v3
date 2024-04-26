@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""Routes API"""
 from api.v1.views import app_views
 from flask import Response
 from json import dumps
