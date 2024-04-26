@@ -26,7 +26,7 @@ def one_state(state_id):
                  strict_slashes=False)
 def delete_state(state_id):
     """Deletes a State object"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     state.delete()
@@ -51,7 +51,7 @@ def new_state():
                  strict_slashes=False)
 def update_state(state_id):
     """Updates an exisiting State Object"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     if not request.get_json():
