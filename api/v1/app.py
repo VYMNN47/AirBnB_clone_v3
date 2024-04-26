@@ -11,11 +11,13 @@ app.register_blueprint(app_views)
 
 @app.errorhandler(404)
 def error_404(error):
+    """Returns Not Found on 404"""
     return jsonify({"error": "Not found"}), 404
 
 
 @app.teardown_appcontext
 def close_storage(exception):
+    """Handles closing Storage"""
     storage.close()
 
 
