@@ -16,7 +16,7 @@ def state():
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def one_state(state_id):
     """Retrieves a State object"""
-    obj = storage.get("State", state_id)
+    obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
     return jsonify(obj.to_dict())
