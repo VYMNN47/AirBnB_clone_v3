@@ -9,26 +9,26 @@ from models.user import User
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def users():
     """Retrieves the list of all User objects"""
-    objs = storage.all(User)
-    return jsonify([obj.to_dict() for obj in objs.values()])
+    users = storage.all(User)
+    return jsonify([user.to_dict() for user in users.values()])
 
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def one_user(user_id):
     """Retrieves a User object"""
-    obj = storage.get(User, user_id)
+    user = storage.get(User, user_id)
     if not obj:
         abort(404)
-    return jsonify(obj.to_dict())
+    return jsonify(user.to_dict())
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id):
     """Returns an empty dictionary with the status code 200"""
-    obj = storage.get(User, user_id)
-    if not obj:
+    user = storage.get(User, user_id)
+    if not user:
         abort(404)
-    obj.delete()
+    user.delete()
     storage.save()
     return jsonify({}), 200
 
@@ -44,17 +44,16 @@ def post_user():
     if 'password' not in new_user:
         abort(400, 'Missing password')
 
-    obj = User(**new_user)
-    storage.new(obj)
-    storage.save()
-    return jsonify(obj.to_dict()), 201
+    user = User(**new_user)
+    user.save()
+    return jsonify(user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def put_user(user_id):
-    """Returns the User object with the status code 200"""
-    obj = storage.get(User, user_id)
-    if not obj:
+    """Returns the User object"""
+    user = storage.get(User, user_id)
+    if not user:
         abort(404)
 
     req = request.get_json()
@@ -63,7 +62,7 @@ def put_user(user_id):
 
     for key, value in req.items():
         if key not in ['id', 'email', 'created_at', 'updated_at']:
-            setattr(obj, key, value)
+            setattr(user, key, value)
 
-    storage.save()
-    return jsonify(obj.to_dict()), 200
+    user.save()
+    return jsonify(user.to_dict()), 200
