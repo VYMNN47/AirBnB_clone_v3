@@ -52,7 +52,7 @@ def new_state():
         obj.save()
         data = obj.to_dict()
         return Response(response=dumps(data, indent=2)
-                    + '\n', mimetype='application/json'), 201
+                        + '\n', mimetype='application/json'), 201
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
