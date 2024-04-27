@@ -17,7 +17,7 @@ def places():
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
-def one_user(place_id):
+def one_place(place_id):
     """Retrieves a Place object"""
     place = storage.get(Place, user_id)
     if not place:
@@ -27,7 +27,7 @@ def one_user(place_id):
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_city(place_id):
+def delete_place(place_id):
     """Returns an empty dictionary with the status code 200"""
     place = storage.get(Place, user_id)
     if not place:
@@ -37,9 +37,9 @@ def delete_city(place_id):
     return jsonify({}), 200
 
 
-@app_views.route('/cities/<city_id>', methods=['POST'], strict_slashes=False)
-def city_user():
-    """Returns new User Object"""
+@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+def post_place():
+    """Returns new Place Object"""
     if not storage.get(City, city_id):
         abort(404)
 
@@ -60,7 +60,7 @@ def city_user():
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
-def put_user(place_id):
+def put_place(place_id):
     """Modifies a Place object"""
     place = storage.get(Place, place_id)
     if not place:
