@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module for places API"""
+"""Module for reivews API"""
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
@@ -11,7 +11,7 @@ from models.review import Review
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def reviews(place_id):
-    """Retrieves the list of all place objects in cities"""
+    """Retrieves the list of all review objects in places"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -60,8 +60,7 @@ def post_review(place_id):
 
     review = Review(**new_review)
     setattr(review, 'place_id', place_id)
-    storage.new(review)
-    storage.save()
+    review.save()
     return jsonify(review.to_dict()), 201
 
 
