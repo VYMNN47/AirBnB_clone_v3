@@ -8,7 +8,8 @@ from models.city import City
 from models.state import State
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
 def cities(state_id):
     """Retrieves the list of all State objects"""
     state = storage.get(State, state_id)
@@ -39,10 +40,11 @@ def delete_city(city_id):
         abort(404)
     city.delete()
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
-@app_views.route('states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
 def new_city(state_id):
     """Creates a new State"""
     state = storage.get(State, state_id)
@@ -76,4 +78,4 @@ def update_city(city_id):
     city.save()
     data = city.to_dict()
     return Response(response=dumps(data, indent=2)
-                    + '\n', mimetype='application/json')
+                    + '\n', mimetype='application/json'), 200
