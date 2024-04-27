@@ -5,13 +5,16 @@ from json import dumps
 from flask import abort, jsonify, request, make_response, Response
 from models import storage
 from models.city import City
+from models.state import State
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
-def cities():
+def cities(state_id):
     """Retrieves the list of all State objects"""
-    objs = storage.all("City")
-    data = [obj.to_dict() for obj in objs.values()]
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    data = [city.to_dict() for city in state.cities]
     return Response(response=dumps(data, indent=2)
                     + '\n', mimetype='application/json')
 
