@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """Handles State API actions"""
 from api.v1.views import app_views
-from flask import abort, jsonify, request, make_response
+from json import dumps
+from flask import abort, jsonify, request, make_response, Response
 from models import storage
 from models.state import State
 
@@ -10,7 +11,10 @@ from models.state import State
 def state():
     """Retrieves the list of all State objects"""
     objs = storage.all("State")
-    return jsonify([obj.to_dict() for obj in objs.values()])
+    data = [obj.to_dict() for obj in objs.values()]
+#    return jsonify([obj.to_dict() for obj in objs.values()])
+    return Response(response=dumps(data, indent=2)
+                    + '\n', mimetype='application/json')
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
@@ -19,7 +23,9 @@ def one_state(state_id):
     obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
-    return jsonify(obj.to_dict())
+    data = obj.to_dict()
+    return Response(response=dumps(data, indent=2)
+                    + '\n', mimetype='application/json')
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
@@ -44,7 +50,9 @@ def new_state():
     else:
         obj = State(**request.get_json())
         obj.save()
-        return jsonify(obj.to_dict()), 201
+        data = obj.to_dict()
+        return Response(response=dumps(data, indent=2)
+                    + '\n', mimetype='application/json'), 201
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
@@ -60,4 +68,6 @@ def update_state(state_id):
     state_data = request.get_json()
     state.name = state_data['name']
     state.save()
-    return jsonify(state.to_dict()), 200
+    data = state.to_dict()
+    return Response(response=dumps(data, indent=2)
+                    + '\n', mimetype='application/json')
