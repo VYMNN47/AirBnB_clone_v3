@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Contains the blueprints"""
 from flask import Blueprint
 

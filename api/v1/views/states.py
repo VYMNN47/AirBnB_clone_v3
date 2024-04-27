@@ -8,14 +8,14 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def state():
-    """Retrieves list of all State objects"""
+    """Returns list of all State objects"""
     states = storage.all(State)
     return jsonify([state.to_dict() for state in states.values()])
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def single_state(state_id):
-    """Retrieves a State object"""
+    """Returns a State object"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -55,11 +55,11 @@ def put_state(state_id):
     if not state:
         abort(404)
 
-    req = request.get_json()
-    if not req:
+    request = request.get_json()
+    if not request:
         abort(400, "Not a JSON")
 
-    for key, value in req.items():
+    for key, value in request.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)
 
