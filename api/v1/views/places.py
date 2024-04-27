@@ -53,8 +53,8 @@ def post_place(city_id):
 
     if not storage.get(User, new_place['user_id']):
         abort(404)
-
     place = Place(**new_place)
+    setattr(place, 'city_id', city_id)
     place.save()
     return jsonify(place.to_dict()), 201
 
