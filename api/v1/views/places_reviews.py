@@ -3,7 +3,6 @@
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
-from models.city import City
 from models.place import Place
 from models.user import User
 from models.review import Review
@@ -61,7 +60,8 @@ def post_review(place_id):
 
     review = Review(**new_review)
     setattr(review, 'place_id', place_id)
-    review.save()
+    storage.new(review)
+    storage.save()
     return jsonify(review.to_dict()), 201
 
 
@@ -77,7 +77,8 @@ def put_review(review_id):
         abort(400, "Not a JSON")
 
     for key, value in req.items():
-        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'place_id', 'created_at',
+                       'updated_at']:
             setattr(review, key, value)
 
     review.save()
