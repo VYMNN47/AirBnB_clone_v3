@@ -53,7 +53,7 @@ def post_review(place_id):
         abort(400, "Not a JSON")
     if 'user_id' not in new_review:
         abort(400, "Missing user_id")
-    user = storage.get(User, new_place['user_id'])
+    user = storage.get(User, new_review['user_id'])
     if not user:
         abort(404)
     if 'text' not in new_review:
@@ -77,7 +77,7 @@ def put_review(review_id):
         abort(400, "Not a JSON")
 
     for key, value in req.items():
-        if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
             setattr(review, key, value)
 
     review.save()
