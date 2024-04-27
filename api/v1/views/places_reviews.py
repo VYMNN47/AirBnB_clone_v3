@@ -30,7 +30,7 @@ def one_review(review_id):
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_place(review_id):
+def delete_review(review_id):
     """Returns an empty dictionary"""
     review = storage.get(Review, review_id)
     if not review:
@@ -43,7 +43,7 @@ def delete_place(review_id):
 @app_views.route('places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def post_review(place_id):
-    """Returns new Place Object"""
+    """Returns new Review Object"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
