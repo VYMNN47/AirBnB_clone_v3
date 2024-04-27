@@ -38,7 +38,7 @@ def delete_place(place_id):
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
-def post_place():
+def post_place(city_id):
     """Returns new Place Object"""
     if not storage.get(City, city_id):
         abort(404)
