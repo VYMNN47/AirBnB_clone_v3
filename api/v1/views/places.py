@@ -10,7 +10,7 @@ from models.user import User
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def places():
+def places(city_id):
     """Retrieves the list of all place objects in cities"""
     city = storage.get(City, city_id)
     if not city:
