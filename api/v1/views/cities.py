@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Handles State API actions"""
+"""Handles City API actions"""
 from api.v1.views import app_views
 from json import dumps
 from flask import abort, jsonify, request, make_response, Response
