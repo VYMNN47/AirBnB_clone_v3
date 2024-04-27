@@ -35,7 +35,7 @@ def one_city(city_id):
 def delete_city(city_id):
     """Deletes a State object"""
     city = storage.get(City, city_id)
-    if state is None:
+    if city is None:
         abort(404)
     city.delete()
     storage.save()
