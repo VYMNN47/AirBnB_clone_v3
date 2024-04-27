@@ -27,7 +27,7 @@ def single_state(state_id):
 def del_state(state_id):
     """Deletes a State object"""
     state = storage.get(State, state_id)
-    if not obj:
+    if not state:
         abort(404)
     state.delete()
     storage.save()
