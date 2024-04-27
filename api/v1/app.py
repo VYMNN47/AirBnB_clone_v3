@@ -1,28 +1,27 @@
 #!/usr/bin/python3
-"""This module contains the Flask application for the API."""
-from flask import Flask, make_response, jsonify, Response
-from json import dumps
+"""Flask API."""
+import os
+from flask import Flask, jsonify
+from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
-import os
 
 app = Flask(__name__)
-app.register_blueprint(app_views, url_prefix='/api/v1')
+"""Flask web application instance."""
+app.register_blueprint(app_views)
+
+
+@app.teardown_appcontext
+def teardown_flask(exception):
+    '''The Flask app/request context end event listener.'''
+    # print(exception)
+    storage.close()
 
 
 @app.errorhandler(404)
 def error_404(error):
-    """Returns Not Found on 404"""
-    data = {'error': 'Not found'}
-    return Response(response=dumps(data, indent=2)
-                    + '\n', mimetype='application/json'), 404
-
-
-@app.teardown_appcontext
-def close_storage(exception):
-    """Handles closing Storage"""
-    storage.close()
-
+    '''Handles the 404 HTTP error code.'''
+    return jsonify(error='Not found'), 404
 
 if __name__ == "__main__":
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
