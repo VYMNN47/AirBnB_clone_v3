@@ -29,7 +29,7 @@ def one_place(place_id):
                  strict_slashes=False)
 def delete_place(place_id):
     """Returns an empty dictionary with the status code 200"""
-    place = storage.get(Place, user_id)
+    place = storage.get(Place, place_id)
     if not place:
         abort(404)
     place.delete()
