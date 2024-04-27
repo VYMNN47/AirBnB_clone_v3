@@ -13,6 +13,8 @@ from models.user import User
 def places():
     """Retrieves the list of all place objects in cities"""
     city = storage.get(City, city_id)
+    if not city:
+        abort(404)
     return jsonify([place.to_dict() for place in city.places])
 
 
@@ -40,7 +42,8 @@ def delete_place(place_id):
 @app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
 def post_place(city_id):
     """Returns new Place Object"""
-    if not storage.get(City, city_id):
+    city = storage.get(City, city_id)
+    if not city:
         abort(404)
 
     new_place = request.get_json()
@@ -48,11 +51,12 @@ def post_place(city_id):
         abort(400, "Not a JSON")
     if 'user_id' not in new_place:
         abort(400, "Missing user_id")
+    user = storage.get(User, new_place['user_id'])
+    if not user:
+        abort(404)
     if 'name' not in new_place:
         abort(400, 'Missing name')
 
-    if not storage.get(User, new_place['user_id']):
-        abort(404)
     place = Place(**new_place)
     setattr(place, 'city_id', city_id)
     place.save()
