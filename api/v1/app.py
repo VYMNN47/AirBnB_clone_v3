@@ -13,7 +13,9 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 @app.errorhandler(404)
 def error_404(error):
     """Returns Not Found on 404"""
-    return jsonify{'error': 'Not found'}
+    data = {'error': 'Not found'}
+    return Response(response=dumps(data, indent=2)
+                    + '\n', mimetype='application/json'), 404
 
 
 @app.teardown_appcontext
