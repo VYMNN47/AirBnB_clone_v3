@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module for users API"""
+"""Module for places API"""
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
@@ -30,7 +30,7 @@ def one_place(place_id):
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_place(place_id):
-    """Returns an empty dictionary with the status code 200"""
+    """Returns an empty dictionary"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
