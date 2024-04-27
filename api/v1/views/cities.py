@@ -27,7 +27,7 @@ def one_state(city_id):
                     + '\n', mimetype='application/json')
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'],
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_state(city_id):
     """Deletes a State object"""
@@ -39,7 +39,7 @@ def delete_state(city_id):
     return jsonify({})
 
 
-@app_views.route('/states', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities', methods=['POST'], strict_slashes=False)
 def new_state():
     """Creates a new State"""
     if not request.get_json():
@@ -54,9 +54,9 @@ def new_state():
                         + '\n', mimetype='application/json'), 201
 
 
-@app_views.route('/states/<string:state_id>', methods=['PUT'],
+@app_views.route('/cities/<string:city_id>', methods=['PUT'],
                  strict_slashes=False)
-def update_state(state_id):
+def update_state(city_id):
     """Updates an exisiting State Object"""
     city = storage.get(City, city_id)
     if city is None:
