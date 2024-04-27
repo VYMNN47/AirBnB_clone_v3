@@ -1,28 +1,24 @@
 #!/usr/bin/python3
-"""This module contains routes for API status."""
-
+'''Contains the index view for the API.'''
+from flask import jsonify
 from api.v1.views import app_views
-from json import dumps
-from flask import Response, jsonify
 from models import storage
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
-    """Returns the status: OK"""
-    return jsonify({"status": "OK"})
+    """Returns Status: OK"""
+    return jsonify(status="OK")
 
 
-@app_views.route('/stats', methods=['GET'])
-def stats():
-    """Returns the count of all class objects"""
-    data = {
-        "amenities": storage.count("Amenity"),
-        "cities": storage.count("City"),
-        "places": storage.count("Place"),
-        "reviews": storage.count("Review"),
-        "states": storage.count("State"),
-        "users": storage.count("User")
-    }
-    return Response(response=dumps(data, indent=2)
-                    + '\n', mimetype='application/json')
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+def stat():
+    """returns the count of each object in storage"""
+    return jsonify(
+        amenities=storage.count('Amenity'),
+        cities=storage.count('City'),
+        places=storage.count('Place'),
+        reviews=storage.count('Review'),
+        states=storage.count('State'),
+        users=storage.count('User')
+    )
