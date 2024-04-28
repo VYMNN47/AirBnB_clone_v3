@@ -44,7 +44,7 @@ def delete_place_amenity(place_id, amenity_id):
     return jsonify({}), 200
 
 
-@app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['POST'], strict_slashes=False)
 def post_place_amenity(place_id, amenity_id):
     """Returns new Review Object"""
