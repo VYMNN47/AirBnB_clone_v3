@@ -24,7 +24,7 @@ def amenities(place_id):
 
 @app_views.route('places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_amenity(place_id, amenity_id):
+def del_amenity(place_id, amenity_id):
     """Returns an empty dictionary"""
     place = storage.get(Place, place_id)
     if not place:
