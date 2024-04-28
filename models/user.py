@@ -34,5 +34,5 @@ class User(BaseModel, Base):
         return self._password
 
     @password.setter
-    def password(self, password):
-        self._password = hashlib.md5(password.encode()).hexdigest()
+    def password(self, passwrd):
+        self._password = hashlib.md5(passwrd.encode()).hexdigest()
