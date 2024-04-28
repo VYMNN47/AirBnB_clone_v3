@@ -10,7 +10,7 @@ import os
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
-def reviews(place_id):
+def amenities(place_id):
     """Retrieves the list of all review objects in places"""
     place = storage.get(Place, place_id)
     if not place:
@@ -24,7 +24,7 @@ def reviews(place_id):
 
 @app_views.route('places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_review(place_id, amenity_id):
+def delete_amenity(place_id, amenity_id):
     """Returns an empty dictionary"""
     place = storage.get(Place, place_id)
     if not place:
@@ -46,7 +46,7 @@ def delete_review(place_id, amenity_id):
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['POST'], strict_slashes=False)
-def post_review(place_id, amenity_id):
+def post_amenity(place_id, amenity_id):
     """Returns new Review Object"""
     place = storage.get(Place, place_id)
     if not place:
