@@ -24,7 +24,7 @@ def amenities(place_id):
 
 @app_views.route('places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
-def del_amenity(place_id, amenity_id):
+def delete_amenity(place_id, amenity_id):
     """Returns an empty dictionary"""
     place = storage.get(Place, place_id)
     if not place:
@@ -64,6 +64,5 @@ def post_amenity(place_id, amenity_id):
         return jsonify(amenity.to_dict), 200
 
     amenities.append(amenity)
-    setattr(review, 'place_id', place_id)
     place.save()
     return jsonify(amenity.to_dict()), 201
