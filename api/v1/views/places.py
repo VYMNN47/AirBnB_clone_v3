@@ -84,6 +84,7 @@ def put_place(place_id):
     place.save()
     return jsonify(place.to_dict()), 200
 
+
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def places_search():
     """ """
@@ -105,7 +106,7 @@ def places_search():
     list_places = []
 
     if states:
-        states_obj = [storage.get(state, state_id) for state_id in states]
+        states_obj = [storage.get(State, state_id) for state_id in states]
         for state in state_obj:
             if state:
                 for city in state.cities:
@@ -123,10 +124,10 @@ def places_search():
 
     if amenities:
         if not list_places:
-            all_palces = storage.all(Place).values()
-            amenities_obj = [ftorage.get(Amenity, a_id) for a_id in amenities]
+            all_places = storage.all(Place).values()
+            amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
             for place in all_places:
-                if all ([amen in place.amenities for amen in amenities_obj]):
+                if all([amen in place.amenities for amen in amenities_obj]):
                     list_places.append(place)
 
     places = []
